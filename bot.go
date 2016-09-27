@@ -294,6 +294,7 @@ func (bot *MattermostBot) CreateBotDebuggingChannelIfNeeded() {
 		for _, channel := range channelList.Channels {
 
 			// The logging channel has alredy been created, lets just use it
+			println("chan name: " + channel.Name)
 			if channel.Name == bot.channelName {
 				bot.debuggingChannel = channel
 				return
@@ -302,6 +303,7 @@ func (bot *MattermostBot) CreateBotDebuggingChannelIfNeeded() {
 	}
 
 	// Looks like we need to create the logging channel
+	// TODO this will fails if the chan already exists but the bot is not member of it already.
 	channel := &model.Channel{}
 	channel.Name = bot.channelName
 	channel.DisplayName = "Debugging For Sample Bot"
@@ -379,7 +381,7 @@ func (bot *MattermostBot) HandleMsgFromDebuggingChannel(event *model.WebSocketEv
 		}
 	}
 
-	bot.SendMsgToDebuggingChannel("I did not understand you!", post.Id)
+//	bot.SendMsgToDebuggingChannel("I did not understand you!", post.Id) 
 }
 
 func PrintError(err *model.AppError) {
